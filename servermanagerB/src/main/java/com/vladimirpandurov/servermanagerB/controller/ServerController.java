@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
@@ -28,16 +29,17 @@ public class ServerController {
     private final ServerServiceImpl serverService;
 
     @GetMapping
-    public ResponseEntity<Response> getServers() {
+    public ResponseEntity<Response> getServers() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
         return ResponseEntity.ok(
-                Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .data(Map.of("servers", this.serverService.list(30)))
-                .message("Servers retrieved")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .build()
-        );
+              Response.builder()
+               .timeStamp(LocalDateTime.now())
+               .data(Map.of("servers", this.serverService.list(30)))
+               .message("Servers retrieved")
+               .status(HttpStatus.OK)
+               .statusCode(HttpStatus.OK.value())
+               .build()
+       );
     }
     @GetMapping("/{id}")
     public ResponseEntity<Response> getServer(@PathVariable("id") Long id){
