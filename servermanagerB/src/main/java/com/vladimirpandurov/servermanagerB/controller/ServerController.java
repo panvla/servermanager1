@@ -55,7 +55,8 @@ public class ServerController {
     }
 
     @GetMapping("/ping/{idAddress}")
-    public ResponseEntity<Response> pingServer(@PathVariable("idAddress") String ipAddress) throws IOException {
+    public ResponseEntity<Response> pingServer(@PathVariable("idAddress") String ipAddress) throws IOException, InterruptedException {
+        TimeUnit.SECONDS.sleep(2);
         Server server =  this.serverService.ping(ipAddress);
         return ResponseEntity.ok(
                 Response.builder()
