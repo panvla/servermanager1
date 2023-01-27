@@ -70,7 +70,7 @@ export class AppComponent implements OnInit{
     this.appState$ = this.serverService.filter$(status.target.value, this.dataSubject.value)
       .pipe(
         map(response => {
-          return { dataState: DataState.LOADED_STATE, appData: response };
+          return { dataState: DataState.LOADED_STATE, appData: {...response, data: {servers: response.data.servers.reverse()}} };
         }),
         startWith({ dataState: DataState.LOADED_STATE, appData: this.dataSubject.value }),
         catchError((error: string) => {
